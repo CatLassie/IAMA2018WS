@@ -23,19 +23,30 @@ def compute_frames(y):
 
 def compute_spectrogram(y):
     spectrogram = librosa.core.stft(y=y, n_fft=2048, hop_length=1024)
-    spectrogramReal = np.abs(spectrogram)
+    spectrogram_real = np.abs(spectrogram) # **2 for power spectrogram?
     """"
     print(spectrogram[0])
     print()
-    print(spectrogramReal[0])
     """
-    return spectrogramReal
+    #print('spectrogram first element ', spectrogram_real[0])
+    return spectrogram_real
+
+
+def mel_transform(spectrogram):
+    mel_spectrogram = librosa.feature.melspectrogram(S=spectrogram)
+    #print('spectrogram first element ', mel_spectrogram[0])
+    return mel_spectrogram
+
+
+def log_scale():
+    return
 
 
 def main():
     file_path = 'music_data/shortName.flac'
     y = load_audio(file_path)
     spectrogram = compute_spectrogram(y)
+    mel_spectrogram = mel_transform(spectrogram)
 
 
 if __name__ == "__main__":
