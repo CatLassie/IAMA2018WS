@@ -32,13 +32,15 @@ def compute_spectrogram(y):
     print(spectrogram[0])
     print()
     """
+    #print(len(power_spectrogram), len(power_spectrogram[0]))
     #print('spectrogram first element:\n\n', spectrogram_real[0], '\n\n\n')
     return power_spectrogram
 
 
-# apply mel scale to spectrogram
+# apply mel scale to spectrogram (with 40 bins, also try 80)
 def mel_transform(spectrogram):
-    mel_spectrogram = librosa.feature.melspectrogram(S=spectrogram)
+    mel_spectrogram = librosa.feature.melspectrogram(S=spectrogram, n_mels=40)
+    #print(len(mel_spectrogram), len(mel_spectrogram[0]))
     #print('mel spectrogram first element:\n\n', mel_spectrogram[0], '\n\n\n')
     return mel_spectrogram
 
@@ -46,6 +48,7 @@ def mel_transform(spectrogram):
 # apply a log10 scale to spectrogram (resulting magnitudes are in decibels)
 def log_scale(spectrogram):
     log_mel_spectrogram = librosa.power_to_db(S=spectrogram)
+    #print(len(log_mel_spectrogram), len(log_mel_spectrogram[0]))
     #print('log mel spectrogram first element:\n\n', log_mel_spectrogram[0], '\n\n\n')
     return log_mel_spectrogram
 
