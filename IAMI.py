@@ -22,29 +22,30 @@ def compute_frames(y):
     return frames_matrix
 
 
-# apply short time fourier transform to receive spectrogram
+# apply short time fourier transform
+# take absolute values and square them
+# returns power spectrogram
 def compute_spectrogram(y):
     spectrogram = librosa.core.stft(y=y, n_fft=2048, hop_length=1024)
-    spectrogram_real = np.abs(spectrogram) # **2 for power spectrogram?
+    power_spectrogram = (np.abs(spectrogram))**2
     """"
     print(spectrogram[0])
     print()
     """
     #print('spectrogram first element:\n\n', spectrogram_real[0], '\n\n\n')
-    return spectrogram_real
+    return power_spectrogram
 
 
 # apply mel scale to spectrogram
 def mel_transform(spectrogram):
     mel_spectrogram = librosa.feature.melspectrogram(S=spectrogram)
-    print()
     #print('mel spectrogram first element:\n\n', mel_spectrogram[0], '\n\n\n')
     return mel_spectrogram
 
 
-# apply a log10 scale to spectrogram (result magnitutes are in decibels)
+# apply a log10 scale to spectrogram (resulting magnitudes are in decibels)
 def log_scale(spectrogram):
-    log_mel_spectrogram = librosa.amplitude_to_db(S=spectrogram)
+    log_mel_spectrogram = librosa.power_to_db(S=spectrogram)
     #print('log mel spectrogram first element:\n\n', log_mel_spectrogram[0], '\n\n\n')
     return log_mel_spectrogram
 
