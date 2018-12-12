@@ -10,12 +10,12 @@ def main():
     log_mel_spectrogram = f.compute_spectrogram(y, 2048, 1024, 40)
     norm_spectrogram = o.normalize_frequencies(log_mel_spectrogram)
     odf = o.compute_odf(norm_spectrogram)
-    peaks = o.apply_threshold(odf, 0.5)
+    peaks = o.apply_threshold(odf, 0.8)
     print(odf)
     # print(peaks)
     for i, p in enumerate(peaks):
         if p > 0:
-            print(i/100)
+            print(i/100, '   ', p)
 
 
 
