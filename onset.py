@@ -17,5 +17,25 @@ def normalize_frequencies(spectrogram):
     return normalized_spectrogram
 
 
+def compute_odf(spectrogram):
+    spectral_flux = []
+    for j, f in enumerate(spectrogram[0]):
+        flux = 0
+        for i, g in enumerate(spectrogram):
+            if j > 0:
+                diff = spectrogram[i][j] - spectrogram[i][j-1]
+                # only keep positive difference (increase in energy)
+                if diff > 0:
+                    flux = flux + (diff**2)
 
+        spectral_flux.append(flux)
+
+    #print(spectral_flux)
+    return spectral_flux
+
+
+def apply_threshold(odf, threshold=0):
+    odf = np.array(odf)
+    peaks = np.where(odf > threshold, odf, 0)
+    return peaks
 
