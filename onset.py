@@ -39,3 +39,17 @@ def apply_threshold(odf, threshold=0):
     peaks = np.where(odf > threshold, odf, 0)
     return peaks
 
+def pick_local_peaks(peaks):
+    maxima = []
+    for i, p in enumerate(peaks):
+        if p > 0:
+            for r in range(1,4):
+                if i + r < len(peaks):
+
+
+
+
+
+        maxima.append(p)
+
+    return maxima

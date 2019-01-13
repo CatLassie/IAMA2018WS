@@ -24,6 +24,10 @@ def main():
         if p > 0:
             print(i/100, '   ', p)
 
+    maxima = o.pick_local_peaks(peaks)
+
+    print(maxima)
+
 
 
 
