@@ -4,24 +4,24 @@ import numpy as np
 def main():
     print('main()')
 
-def get_file_names(folder_path):
-    onsets_gt_names = librosa.util.find_files(folder_path, ext=['onsets'])
-    beats_gt_names = librosa.util.find_files(folder_path, ext=['beats'])
-    bpm_gt_names = librosa.util.find_files(folder_path, ext=['bpm'])
+def get_file_paths(folder_path):
+    onsets_gt_paths = librosa.util.find_files(folder_path, ext=['onsets'])
+    beats_gt_paths = librosa.util.find_files(folder_path, ext=['beats'])
+    bpm_gt_paths = librosa.util.find_files(folder_path, ext=['bpm'])
 
-    onsets_audio_names = []
-    for i, file in enumerate(onsets_gt_names):
-        onsets_audio_names.append(file.split('onsets')[0]+'flac')
+    onsets_audio_paths = []
+    for i, file in enumerate(onsets_gt_paths):
+        onsets_audio_paths.append(file.split('onsets')[0]+'flac')
 
-    beats_audio_names = []
-    for i, file in enumerate(beats_gt_names):
-        beats_audio_names.append(file.split('onsets')[0]+'flac')
+    beats_audio_paths = []
+    for i, file in enumerate(beats_gt_paths):
+        beats_audio_paths.append(file.split('onsets')[0]+'flac')
 
-    bpm_audio_names = []
-    for i, file in enumerate(bpm_gt_names):
-        bpm_audio_names.append(file.split('onsets')[0]+'flac')
+    bpm_audio_paths = []
+    for i, file in enumerate(bpm_gt_paths):
+        bpm_audio_paths.append(file.split('onsets')[0]+'flac')
 
-    return onsets_gt_names, beats_gt_names, bpm_gt_names, onsets_audio_names, beats_audio_names, bpm_audio_names
+    return onsets_gt_paths, beats_gt_paths, bpm_gt_paths, onsets_audio_paths, beats_audio_paths, bpm_audio_paths
 
 def load_audio(file_path, sampling_rate, inf=False):
     y, sr = librosa.load(file_path, sr=sampling_rate)
