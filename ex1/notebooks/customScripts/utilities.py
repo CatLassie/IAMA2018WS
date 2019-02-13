@@ -38,17 +38,34 @@ def load_audio(file_path, sampling_rate, inf=False):
         print("sampling rate: ", sr, '\n\n\n')
     return y
 
-def load_ground_truths(file_paths, delimiter):
+def load_gts(file_paths, delimiter, gt_type):
     gts = []
-    for i, path in enumerate(file_paths):
-        gts.append(load_ground_truth(path, delimiter))
+    if gt_type == 'onsets':
+        for i, path in enumerate(file_paths):
+            gts.append(load_onsets_gt(path, delimiter))
+    if gt_type == 'beats':
+        for i, path in enumerate(file_paths):
+            gts.append(load_beats_gt(path, delimiter))
+    if gt_type == 'bpm':
+        for i, path in enumerate(file_paths):
+            gts.append(load_bpm_gt(path, delimiter))
     return gts
 
-# TODO INT IS NOT GOOD FOR ONSETS AND BEATS, BPM IS NOT AN ARRAY!
-def load_ground_truth(file_path, delimiter):
+def load_onsets_gt(file_path, delimiter):
     gt = np.genfromtxt(fname=file_path, delimiter=delimiter)
-    return gt.astype(np.int64)
+    gt_rounded = []
+    for i, e in enumerate(gt):
+        gt_rounded.append(round(e, 2))
+    return gt_rounded
 
+def load_beats_gt(file_path, delimiter):
+    return[]
+
+def load_bpm_gt(file_path, delimiter):
+    gt = np.genfromtxt(fname=file_path, delimiter=delimiter)
+    return np.asscalar(gt)
+
+# NOT USED
 def compute_0_padded_gt(gt, audio_length):
     padded_gt = []
     for i in range(audio_length):
@@ -57,6 +74,7 @@ def compute_0_padded_gt(gt, audio_length):
         padded_gt[gt[i]] = 1
     return padded_gt
 
+# NOT USED
 def adjust_gt_to_frames(gt, conversion_const):
     converted_gt = []
     for i, element in enumerate(gt):

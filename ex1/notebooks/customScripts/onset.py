@@ -4,7 +4,7 @@ import numpy as np
 
 ######## PART 2 ########
 
-# not used
+# NOT USED
 def normalize_frequencies(spectrogram):
     normalized_spectrogram = librosa.util.normalize(S=spectrogram, axis=1) #axis=0 is columns, but maybe norm=1
 
