@@ -1,5 +1,6 @@
 import librosa
 import numpy as np
+from scipy.signal import argrelextrema
 
 
 ######## PART 2 ########
@@ -33,24 +34,20 @@ def compute_odf(spectrogram):
     #print(spectral_flux)
     return spectral_flux
 
-
+# CONSIDER USING % VALUE FROM MAX VALUE
 def apply_threshold(odf, threshold=0):
     odf = np.array(odf)
     peaks = np.where(odf > threshold, odf, 0)
     return peaks
-"""
+
 def pick_local_peaks(peaks):
-    maxima = []
-    for i, p in enumerate(peaks):
-        if p > 0:
-            for r in range(1,4):
-                if i + r < len(peaks):
+    r = 3
+    peaks = np.asarray(peaks)
+    # pad peaks with 0s
+    for i in range(r):
+        peaks = np.insert(peaks, 0, 0)
+        peaks = np.append(peaks, 0)
 
-
-
-
-
-        maxima.append(p)
-
+    # get the local maximas (+ magic to offset padded 0s)
+    maxima = argrelextrema(peaks, np.greater, order=r)[0] - r
     return maxima
-"""
