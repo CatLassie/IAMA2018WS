@@ -34,10 +34,12 @@ def compute_odf(spectrogram):
     #print(spectral_flux)
     return spectral_flux
 
-# CONSIDER USING % VALUE FROM MAX VALUE
-def apply_threshold(odf, threshold=0):
+def apply_threshold(odf, threshold, inf=False):
     odf = np.array(odf)
-    peaks = np.where(odf > threshold, odf, 0)
+    minimum_allowed = max(odf)*threshold
+    if inf:
+        print("lower threshold value", minimum_allowed)
+    peaks = np.where(odf > minimum_allowed, odf, 0)
     return peaks
 
 def pick_local_peaks(peaks):
