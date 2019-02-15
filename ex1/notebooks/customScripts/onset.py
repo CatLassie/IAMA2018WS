@@ -34,12 +34,25 @@ def compute_odf(spectrogram):
     #print(spectral_flux)
     return spectral_flux
 
-def apply_threshold(odf, threshold, inf=False):
+def apply_threshold(odf, window_size, inf=False):
     odf = np.array(odf)
-    minimum_allowed = max(odf)*threshold
+    mean = np.mean(odf)
+    #minimum_allowed = max(odf)*threshold (cut off all values below this threshold)
+
     if inf:
-        print("lower threshold value", minimum_allowed)
-    peaks = np.where(odf > minimum_allowed, odf, 0)
+        print("max value: ", max(odf))
+        print("mean value: ", np.mean(odf))
+        print("median value: ", np.median(odf))
+
+    #compute running mean with windows
+    running_mean = np.convolve(odf, np.ones((window_size,))/window_size, mode='same')
+    threshold =  1.05*np.where(running_mean > mean, running_mean, mean)
+
+    if inf:
+        print("odf: ", odf)
+        print("threshold: ", threshold)
+
+    peaks = np.where(odf > threshold, odf, 0)
     return peaks
 
 def pick_local_peaks(peaks):
