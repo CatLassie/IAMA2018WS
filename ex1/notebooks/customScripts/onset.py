@@ -1,6 +1,8 @@
 import librosa
 import numpy as np
 from scipy.signal import argrelextrema
+from scipy.signal import medfilt
+
 
 
 ######## PART 2 ########
@@ -45,8 +47,11 @@ def apply_threshold(odf, window_size, inf=False):
         print("median value: ", np.median(odf))
 
     #compute running mean with windows
-    running_mean = np.convolve(odf, np.ones((window_size,))/window_size, mode='same')
-    threshold =  1.05*np.where(running_mean > mean, running_mean, mean)
+    #running_mean = np.convolve(odf, np.ones((window_size,))/window_size, mode='same')
+    #threshold =  1.05*np.where(running_mean > mean, running_mean, mean)
+    
+    running_median = medfilt(odf, window_size)
+    threshold = running_median + 0.35*np.std(odf)
 
     if inf:
         print("odf: ", odf)
