@@ -9,19 +9,19 @@ def get_file_paths(folder_path):
     beats_gt_paths = librosa.util.find_files(folder_path, ext=['beats'])
     bpm_gt_paths = librosa.util.find_files(folder_path, ext=['bpm'])
 
-    onsets_audio_paths = []
+    onsets_paths = []
     for i, file in enumerate(onsets_gt_paths):
-        onsets_audio_paths.append(file.split('onsets')[0]+'flac')
+        onsets_paths.append(file.split('.onsets')[0])
 
-    beats_audio_paths = []
+    beats_paths = []
     for i, file in enumerate(beats_gt_paths):
-        beats_audio_paths.append(file.split('beats')[0]+'flac')
+        beats_paths.append(file.split('.beats')[0])
 
-    bpm_audio_paths = []
+    bpm_paths = []
     for i, file in enumerate(bpm_gt_paths):
-        bpm_audio_paths.append(file.split('bpm')[0]+'flac')
+        bpm_paths.append(file.split('.bpm')[0])
 
-    return onsets_gt_paths, beats_gt_paths, bpm_gt_paths, onsets_audio_paths, beats_audio_paths, bpm_audio_paths
+    return onsets_paths, beats_paths, bpm_paths
 
 def load_audios(file_paths, sampling_rate, inf=False):
     audios = []
