@@ -22,7 +22,7 @@ def normalize_frequencies(spectrogram):
 
 
 
-def compute_odf(spectrogram):
+def compute_odf(spectrogram, mel_bin_number):
     spectral_flux = []
     for j, f in enumerate(spectrogram[0]):
         flux = 0
@@ -32,7 +32,7 @@ def compute_odf(spectrogram):
                 # only keep positive difference (increase in energy)
                 if diff > 0:
                     # flux = flux + (diff**2) # no filtering by freq. bin
-                    flux = flux + (diff**(math.log2(40-i))) # something like a low pass filter :)
+                    flux = flux + (diff**(math.log2(mel_bin_number-i))) # something like a low pass filter :)
 
         spectral_flux.append(flux)
 
