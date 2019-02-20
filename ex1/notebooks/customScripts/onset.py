@@ -40,58 +40,8 @@ def compute_odf(spectrogram, mel_bin_number):
 
 
 
-# NOT USED
-def apply_threshold_mean(odf, window_size, inf=False):
-    odf = np.array(odf)
-    mean = np.mean(odf)
-    #minimum_allowed = max(odf)*threshold (cut off all values below this threshold)
-
-    if inf:
-        print("max value: ", max(odf))
-        print("mean value: ", np.mean(odf))
-        print("median value: ", np.median(odf))
-
-    #compute running mean with windows
-    running_mean = np.convolve(odf, np.ones((window_size,))/window_size, mode='same')
-    threshold = 1.05*np.where(running_mean > mean, running_mean, mean)
-
-    #if inf:
-    #    print("odf: ", odf)
-    #    print("threshold: ", threshold)
-
-    peaks = np.where(odf > threshold, odf, 0)
-    return peaks
-
-
-
-# NOT USED
-def apply_threshold_mean_std(odf, window_size, inf=False):
-    odf = np.array(odf)
-    mean = np.mean(odf)
-    #minimum_allowed = max(odf)*threshold (cut off all values below this threshold)
-
-    if inf:
-        print("max value: ", max(odf))
-        print("mean value: ", np.mean(odf))
-        print("median value: ", np.median(odf))
-
-    #compute running mean with windows
-    running_mean = np.convolve(odf, np.ones((window_size,))/window_size, mode='same')
-    threshold = running_mean + 0.1*np.std(odf)
-    
-    #if inf:
-    #    print("odf: ", odf)
-    #    print("threshold: ", threshold)
-
-    peaks = np.where(odf > threshold, odf, 0)
-    return peaks
-
-
-
 def apply_threshold_median(odf, window_size, add, mult, inf=False):
     odf = np.array(odf)
-    mean = np.mean(odf)
-    #minimum_allowed = max(odf)*threshold (cut off all values below this threshold)
 
     if inf:
         print("max value: ", max(odf))
@@ -100,12 +50,24 @@ def apply_threshold_median(odf, window_size, add, mult, inf=False):
     
     #compute running median with windows
     running_median = medfilt(odf, window_size)
-    #threshold = running_median + 0.33*np.std(odf) # add 33% if std. dev.
     threshold = add + mult*running_median
 
-    #if inf:
-    #    print("odf: ", odf)
-    #    print("threshold: ", threshold)
+    peaks = np.where(odf > threshold, odf, 0)
+    return peaks
+
+
+
+def apply_threshold_mean(odf, window_size, add, mult, inf=False):
+    odf = np.array(odf)
+
+    if inf:
+        print("max value: ", max(odf))
+        print("mean value: ", np.mean(odf))
+        print("median value: ", np.median(odf))
+    
+    #compute running median with windows
+    running_mean = np.convolve(odf, np.ones((window_size,))/window_size, mode='same')
+    threshold = add + mult*running_mean
 
     peaks = np.where(odf > threshold, odf, 0)
     return peaks
