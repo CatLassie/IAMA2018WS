@@ -1,3 +1,6 @@
 .idea/
 venv/
-music_data
+*.flac
+*.onsets
+*.beats
+*.bpm
