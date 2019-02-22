@@ -31,7 +31,7 @@ def compute_odf(spectrogram, mel_bin_number):
                 diff = spectrogram[i][j] - spectrogram[i][j-1]
                 # only keep positive difference (increase in energy)
                 if diff > 0:
-                    flux = flux + (diff**2) # no low-pass filtering (by freq. bin)
+                    flux = flux + (diff) # no low-pass filtering (by freq. bin)
 
         spectral_flux.append(flux)
 

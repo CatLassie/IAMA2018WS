@@ -53,6 +53,7 @@ def load_gts(file_paths, delimiter, gt_type):
 
 def load_onsets_gt(file_path, delimiter):
     gt = np.genfromtxt(fname=file_path, delimiter=delimiter)
+    gt = np.array(gt,ndmin=1)
     gt_rounded = []
     for i, e in enumerate(gt):
         gt_rounded.append(round(e, 2))
